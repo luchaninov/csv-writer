@@ -1,0 +1,26 @@
+{
+    "name": "luchaninov/csv-writer",
+    "description": "CSV/TSV file/string generator",
+    "keywords": ["csv", "tsv", "writer", "generator"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Volodymyr Luchaninov",
+            "homepage": "https://luchaninov.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "gupalo/json": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Luchaninov\\CsvWriter\\": "src/",
+            "Luchaninov\\CsvWriter\\Tests\\": "tests/"
+        }
+    }
+}
