@@ -65,6 +65,6 @@ class TsvWriterTest extends TestCase
 
         self::assertSame($expected, (new TsvWriter())->setOneline(false)->generate($items));
 
-        (new TsvWriter())->setOneline(false)->write(__DIR__ . '/test.tsv', $items);
+        //(new TsvWriter())->setOneline(false)->write(__DIR__ . '/test.tsv', $items);
     }
 }

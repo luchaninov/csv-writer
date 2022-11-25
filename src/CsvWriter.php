@@ -11,7 +11,8 @@ use Stringable;
 class CsvWriter
 {
     protected string $separator = ',';
-    protected string $delimiter = '"';
+    protected string $quote = '"';
+    protected string $escapeChar = '"';
     protected string $lineSeparator = "\n";
     protected bool $oneline = true;
 
@@ -71,9 +72,16 @@ class CsvWriter
         return $this;
     }
 
-    public function setDelimiter(string $delimiter): self
+    public function setQuote(string $quote): self
     {
-        $this->delimiter = $delimiter;
+        $this->quote = $quote;
+
+        return $this;
+    }
+
+    public function setEscapeChar(string $escapeChar): self
+    {
+        $this->escapeChar = $escapeChar;
 
         return $this;
     }
@@ -134,19 +142,29 @@ class CsvWriter
 
         if ($this->oneline) {
             $col = str_replace(["\t", "\r", "\n"], ['\\t', '\\r', '\\n'], $col);
-            if (str_contains($col, $this->separator) || str_starts_with($col, $this->delimiter)) {
-                $col = $this->delimiter.str_replace($this->delimiter, $this->delimiter.$this->delimiter, $col).$this->delimiter;
+            if (str_contains($col, $this->separator) || str_starts_with($col, $this->quote)) {
+                $col = $this->quoteCol($col);
             }
         } elseif (
-            str_starts_with($col, $this->delimiter) ||
+            str_starts_with($col, $this->quote) ||
             str_contains($col, $this->separator) ||
             str_contains($col, "\t") ||
             str_contains($col, "\r") ||
             str_contains($col, "\n")
         ) {
-            $col = $this->delimiter.str_replace($this->delimiter, $this->delimiter.$this->delimiter, $col).$this->delimiter;
+            $col = $this->quoteCol($col);
         }
 
         return $col;
+    }
+
+    private function quoteCol(string $col): string
+    {
+        $col = str_replace($this->escapeChar, $this->escapeChar . $this->escapeChar, $col);
+        if ($this->escapeChar !== $this->quote) {
+            $col = str_replace($this->quote, $this->escapeChar . $this->quote, $col);
+        }
+
+        return $this->quote . $col . $this->quote;
     }
 }

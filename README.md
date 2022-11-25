@@ -60,6 +60,8 @@ k1,k2,k3
 */
 ```
 
+It tries to avoid quoting (surrounding by `"`) but does it if needed.
+
 It is "one item - one line" by default. `\t`, `\r`, `\n` are escaped and fit to one line.
 If you need multiline then `$csvWriter->setOneline(false)`.
 
